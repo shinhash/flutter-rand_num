@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
 import 'dart:math';
 
+import 'package:random_number_generator/screen/settingScreen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -29,13 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// title and icon button
-              _Header(),
+              _Header(
+                onPressSetting: settingIconClick,
+              ),
 
               /// number area
-              _Body(numbers: numbers,),
+              _Body(
+                numbers: numbers,
+              ),
 
               /// button area
-              _Footer(onPressed: generateRandomNumber,),
+              _Footer(
+                settingIconClick: generateRandomNumber,
+              ),
             ],
           ),
         ),
@@ -43,13 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void generateRandomNumber (){
+  void generateRandomNumber() {
     final rand = Random();
     final Set<int> numSet = {};
 
-    while(numSet.length < 3){
+    while (numSet.length < 3) {
       final randNum = rand.nextInt(1000);
-      if(randNum >= 100){
+      if (randNum >= 100) {
         numSet.add(randNum);
       }
     }
@@ -58,10 +66,25 @@ class _HomeScreenState extends State<HomeScreen> {
       numbers = numSet.toList();
     });
   }
+
+  void settingIconClick() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context){
+          return SettingScreen();
+        },
+      ),
+    );
+  }
 }
 
 class _Header extends StatefulWidget {
-  const _Header({super.key});
+  final VoidCallback onPressSetting;
+
+  const _Header({
+    super.key,
+    required this.onPressSetting,
+  });
 
   @override
   State<_Header> createState() => _HeaderState();
@@ -83,7 +106,7 @@ class _HeaderState extends State<_Header> {
         ),
         IconButton(
           color: redColor,
-          onPressed: () {},
+          onPressed: widget.onPressSetting,
           icon: Icon(
             Icons.settings,
           ),
@@ -131,9 +154,10 @@ class _BodyState extends State<_Body> {
 }
 
 class _Footer extends StatefulWidget {
-  final VoidCallback onPressed;
+  final VoidCallback settingIconClick;
+
   const _Footer({
-    required this.onPressed,
+    required this.settingIconClick,
     super.key,
   });
 
@@ -145,7 +169,7 @@ class _FooterState extends State<_Footer> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: widget.onPressed,
+      onPressed: widget.settingIconClick,
       style: ElevatedButton.styleFrom(
         backgroundColor: redColor,
         foregroundColor: Colors.white,
