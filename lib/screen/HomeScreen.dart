@@ -166,9 +166,25 @@ class _FooterState extends State<_Footer> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: widget.settingIconClick,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: redColor,
-        foregroundColor: Colors.white,
+      // style: ElevatedButton.styleFrom(
+      //   backgroundColor: redColor,
+      //   foregroundColor: Colors.white,
+      // ),
+      style: ButtonStyle(
+        /// Material State
+        ///
+        /// hovered - 호버링 상태
+        /// focused - 포커스 상태
+        /// pressed - 누른 상태
+        /// dragged - 드래그 상태
+        /// selected - 선택 상태
+        /// scrollUnder - 다른 컴포넌트 밑으로 스크롤링된 상태
+        /// disabled - 비활성화 상태
+        /// error - 에러 상태
+        ///
+        /// all - 모든 상태
+        backgroundColor: MaterialStateProperty.all(redColor),
+        foregroundColor: MaterialStateProperty.all(Colors.white),
       ),
       child: Text(
         '생성하기!',
